@@ -1,5 +1,5 @@
 package com.example.stockpro
-
+// modelo de datos principales
 data class Producto(
     val id: Int,
     val nombre: String,
