@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun NavegacionApp() {
     val navController = rememberNavController()
-    val viewModel: StockViewModel = viewModel() // Instanciamos el ViewModel compartido
+    val viewModel: StockViewModel = viewModel() // instanciamos ViewModel compartido
 
     NavHost(navController = navController, startDestination = "pantalla1_login") {
         composable("pantalla1_login") {
@@ -69,9 +69,9 @@ fun NavegacionApp() {
     }
 }
 
-// ==========================================
-// PANTALLA 1: LOGIN (Ingreso de Operario) [cite: 37]
-// ==========================================
+
+// PANTALLA 1: DE LOGIN
+
 @Composable
 fun PantallaLogin(navController: NavController) {
     var nombre by remember { mutableStateOf("") }
@@ -81,19 +81,19 @@ fun PantallaLogin(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Bienvenido a StockPro", fontSize = 24.sp, fontWeight = FontWeight.Bold) // [cite: 38]
+        Text("Bienvenido a StockPro", fontSize = 24.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(32.dp))
 
         OutlinedTextField(
             value = nombre,
             onValueChange = { nombre = it },
-            label = { Text("Nombre del Operario") }, // [cite: 38]
+            label = { Text("Nombre del Operario") },
             singleLine = true
         )
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            // Navegamos pasando el nombre como parámetro [cite: 40]
+            // navegamos pasando el nombre como parametro
             onClick = { navController.navigate("pantalla2_catalogo/$nombre") },
             enabled = nombre.length >= 3 // Solo habilitado si tiene 3 o más caracteres [cite: 39]
         ) {
