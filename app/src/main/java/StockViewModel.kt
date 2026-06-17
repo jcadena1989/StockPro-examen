@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 
 class StockViewModel : ViewModel() {
-    // Lista reactiva con 6 productos precargados
+    // creamos 6 productos para mostrar como funciona
     val inventario = mutableStateListOf(
         Producto(1, "Martillo", "Herramienta manual", 15.50, 10),
         Producto(2, "Clavos", "Caja de 100 unidades", 3.00, 2), // Stock crítico
