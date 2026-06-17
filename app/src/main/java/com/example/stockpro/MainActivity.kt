@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             StockProTheme {
-                // Aquí iniciamos directamente la navegación principal
+                // vaos con la navegación principal
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -41,9 +41,9 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// ==========================================
-// CONFIGURACIÓN DE NAVEGACIÓN
-// ==========================================
+
+// CONFIGURACION DE NAVEGACION
+
 @Composable
 fun NavegacionApp() {
     val navController = rememberNavController()
