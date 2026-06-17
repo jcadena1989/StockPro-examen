@@ -19,7 +19,7 @@ class StockViewModel : ViewModel() {
     fun actualizarStock(id: Int, nuevaCantidad: Int) { //
         val index = inventario.indexOfFirst { it.id == id }
         if (index != -1 && nuevaCantidad >= 0) {
-            // Para que Compose detecte el cambio en listas, a veces es necesario reasignar el objeto
+            // par que compose detecte el cambio en las listas, es necesario reasignar el objeto
             inventario[index] = inventario[index].copy(stockActual = nuevaCantidad)
         }
     }
