@@ -21,7 +21,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.stockpro.ui.theme.StockProTheme // Asegúrate de que este import coincida con tu proyecto
+import com.example.stockpro.ui.theme.StockProTheme //siempre debemos verificar concordancia en nombres
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
