@@ -21,7 +21,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.stockpro.ui.theme.StockProTheme //siempre debemos verificar concordancia en nombres
+import com.example.stockpro.ui.theme.StockProTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,12 +54,12 @@ fun NavegacionApp() {
             PantallaLogin(navController)
         }
         composable("pantalla2_catalogo/{nombreOperario}") { backStackEntry ->
-            // Recibimos el nombre del operario [cite: 40]
+            // recibimos el nombre del operario
             val nombre = backStackEntry.arguments?.getString("nombreOperario") ?: ""
             PantallaCatalogo(navController, viewModel, nombre)
         }
         composable("pantalla3_edicion/{productoId}") { backStackEntry ->
-            // Recibimos el ID del producto
+            // recibimos el ID del producto
             val id = backStackEntry.arguments?.getString("productoId")?.toIntOrNull() ?: 0
             PantallaEdicion(navController, viewModel, id)
         }
@@ -70,7 +70,7 @@ fun NavegacionApp() {
 }
 
 
-// PANTALLA 1: DE LOGIN
+// PANTALLA 1: LOGIN
 
 @Composable
 fun PantallaLogin(navController: NavController) {
@@ -95,23 +95,22 @@ fun PantallaLogin(navController: NavController) {
         Button(
             // navegamos pasando el nombre como parametro
             onClick = { navController.navigate("pantalla2_catalogo/$nombre") },
-            enabled = nombre.length >= 3 // Solo habilitado si tiene 3 o más caracteres [cite: 39]
+            enabled = nombre.length >= 3 // Solo habilitado si tiene 3 o más caracteres
         ) {
-            Text("Ingresar al Sistema") // [cite: 38]
+            Text("Ingresar al Sistema")
         }
     }
 }
 
-// ==========================================
-// PANTALLA 2: CATÁLOGO DE INVENTARIO [cite: 41]
-// ==========================================
+
+// PANTALLA 2: CATALOGO DE INVENTARIO
 @Composable
 fun PantallaCatalogo(navController: NavController, viewModel: StockViewModel, nombreOperario: String) {
     var verSoloCritico by remember { mutableStateOf(false) }
 
-    // Obtenemos la lista dependiendo del filtro seleccionado
+    // obtenemos la lista dependiendo del filtro seleccionado
     val productos = if (verSoloCritico) {
-        viewModel.obtenerProductosEnRiesgo() // [cite: 43]
+        viewModel.obtenerProductosEnRiesgo()
     } else {
         viewModel.inventario
     }
@@ -128,14 +127,14 @@ fun PantallaCatalogo(navController: NavController, viewModel: StockViewModel, no
             Text("Operario: $nombreOperario", fontSize = 20.sp, fontWeight = FontWeight.SemiBold) // [cite: 42]
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Botones de filtro [cite: 43]
+            // botones de filtro
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
                 Button(onClick = { verSoloCritico = false }) { Text("Ver Todo") }
                 Button(onClick = { verSoloCritico = true }) { Text("Stock Crítico") }
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Lista de productos [cite: 44]
+            // listado de productos
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(productos) { producto ->
                     Card(
@@ -160,9 +159,9 @@ fun PantallaCatalogo(navController: NavController, viewModel: StockViewModel, no
     }
 }
 
-// ==========================================
-// PANTALLA 3: EDICIÓN DE STOCK [cite: 51]
-// ==========================================
+
+// PANTALLA 3: EDICION DE STOCK
+
 @Composable
 fun PantallaEdicion(navController: NavController, viewModel: StockViewModel, id: Int) {
     val producto = viewModel.obtenerProducto(id)
@@ -181,7 +180,7 @@ fun PantallaEdicion(navController: NavController, viewModel: StockViewModel, id:
             Text("${producto.stockActual}", fontSize = 60.sp, fontWeight = FontWeight.Black) // Texto grande [cite: 52]
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Botones de + y - [cite: 53]
+            // botones de + y -
             Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
                 Button(
                     onClick = { viewModel.actualizarStock(id, producto.stockActual - 1) },
@@ -198,24 +197,24 @@ fun PantallaEdicion(navController: NavController, viewModel: StockViewModel, id:
             }
 
             Spacer(modifier = Modifier.height(48.dp))
-            Button(onClick = { navController.popBackStack() }) { // Regresar [cite: 56]
+            Button(onClick = { navController.popBackStack() }) { // regresar
                 Text("Guardar y Volver")
             }
         }
     } else {
-        // En caso de que no encuentre el ID (por seguridad)
+        // E¿en caso de que no encuentre el ID (por seguridad)
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text("Producto no encontrado")
         }
     }
 }
 
-// ==========================================
-// PANTALLA 4: REPORTE FINANCIERO [cite: 58]
-// ==========================================
+
+// PANTALLA 4: REPORTE FINANCIERO
+
 @Composable
 fun PantallaReporte(navController: NavController, viewModel: StockViewModel) {
-    // Le pedimos al ViewModel que haga los cálculos [cite: 59]
+    // pedimos al viewModel que haga los cálculos
     val totalInvertido = viewModel.calcularValorTotalInventario()
     val productosEnCero = viewModel.contarProductosEnCero()
 
@@ -224,17 +223,17 @@ fun PantallaReporte(navController: NavController, viewModel: StockViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Capital Invertido Total", fontSize = 24.sp, fontWeight = FontWeight.Bold) // [cite: 61]
+        Text("Capital Invertido Total", fontSize = 24.sp, fontWeight = FontWeight.Bold)
         Text("$$totalInvertido", fontSize = 48.sp, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Black) // [cite: 61]
 
         Spacer(modifier = Modifier.height(48.dp))
 
-        Text("Total de productos con stock en cero:", fontSize = 18.sp) // [cite: 62]
+        Text("Total de productos con stock en cero:", fontSize = 18.sp)
         Text("$productosEnCero", fontSize = 32.sp, fontWeight = FontWeight.Bold, color = Color.Red)
 
         Spacer(modifier = Modifier.height(48.dp))
 
-        Button(onClick = { navController.popBackStack() }) { // [cite: 63]
+        Button(onClick = { navController.popBackStack() }) {
             Text("Volver al Catálogo")
         }
     }
